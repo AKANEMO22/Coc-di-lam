@@ -1,0 +1,146 @@
+name: dpl-pvan
+
+services:
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    environment:
+      RI_REDIS_HOST: redis
+      RI_REDIS_PORT: "6379"
+      RI_REDIS_ALIAS: dpl-pvan
+      RI_REDIS_DB: "0"
+    ports:
+      - "127.0.0.1:5540:5540"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - redisinsight_data:/data
+    restart: unless-stopped
+
+  minio:
+    build:
+      context: ./docker/minio
+      dockerfile: Dockerfile
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-dpl-pvan-local}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-local-compose-minio-password-change-before-use}
+    command: ["server", "/data", "--console-address", ":9001"]
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9000/minio/health/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-dpl_pvan}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-compose-postgres-password-change-before-use}
+      POSTGRES_DB: ${POSTGRES_DB:-dpl_pvan}
+    ports:
+      - "127.0.0.1:${DPL_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      PRODUCT_MODE: practice
+      PROFILING_DEADLINE_SECONDS: ${DPL_PROFILING_DEADLINE_SECONDS:-240}
+      # Two separate frontends, sharing the real core and durable trace archive.
+      INSPECTOR_ENABLED: "true"
+      INSPECTOR_LOCAL_AUTH: ${DPL_INSPECTOR_LOCAL_AUTH:-true}
+      TEST_UI_ENABLED: "true"
+      STUDIO_REQUIRE_REAL_PROVIDER: true
+      JWT_SECRET: ${DOCKER_JWT_SECRET:-local-compose-development-secret-change-before-production}
+      REDIS_URL: redis://redis:6379/0
+      WORKSPACE_ROOT_BASE: /data/workspaces
+      ARTIFACT_ARCHIVE_ENABLED: "true"
+      ARTIFACT_ARCHIVE_BUCKET: user-artifacts
+      # Archive catalog + inspector traces live in Postgres; the SQLite catalog path is
+      # unused while DATABASE_URL is set (see scripts/migrate_sqlite_to_postgres.py).
+      DATABASE_URL: postgresql://${POSTGRES_USER:-dpl_pvan}:${POSTGRES_PASSWORD:-local-compose-postgres-password-change-before-use}@postgres:5432/${POSTGRES_DB:-dpl_pvan}
+      OBJECT_STORE_ENDPOINT: http://minio:9000
+      OBJECT_STORE_ACCESS_KEY: ${MINIO_ROOT_USER:-dpl-pvan-local}
+      OBJECT_STORE_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-local-compose-minio-password-change-before-use}
+      OBJECT_STORE_REGION: us-east-1
+      OBJECT_STORE_VERIFY_TLS: "false"
+      # Core runs no retrieval: each session pins a knowledge pack prepared by the ID_Q service
+      # (RAG_CocDiLam, port 8200). The root compose points this at http://rag-idq:8000.
+      RETRIEVAL_BACKEND: idq
+      RAG_IDQ_BASE_URL: ${DPL_RAG_IDQ_URL:-http://host.docker.internal:8200}
+      RAG_IDQ_API_TOKEN: ${RAG_IDQ_API_TOKEN:-local-idq-api-token-change-before-production}
+      RAG_CORE_TOKEN: ${RAG_CORE_TOKEN:-local-idq-core-token-change-before-production}
+      BRAVE_SEARCH_API_KEY: ${DOCKER_BRAVE_SEARCH_API_KEY:-}
+      # Without a real provider, both UIs load but execution is disabled. No scripted fallback.
+      # Set DOCKER_LLM_API_KEY, DOCKER_LLM_API_URL and DOCKER_LLM_MODEL for real runs.
+      LLM_API_KEY: ${DOCKER_LLM_API_KEY:-${LLM_API_KEY:-${OPENAI_API_KEY:-}}}
+      LLM_API_URL: ${DOCKER_LLM_API_URL:-${LLM_API_URL:-}}
+      LLM_MODEL: ${DOCKER_LLM_MODEL:-${LLM_MODEL:-}}
+      # Optional: reasoning_effort for thinking models (Gemini: "low"), per-agent models as JSON.
+      LLM_REASONING_EFFORT: ${DOCKER_LLM_REASONING_EFFORT:-${LLM_REASONING_EFFORT:-}}
+      AGENT_PROFILES_OVERRIDES: ${DOCKER_AGENT_PROFILES_OVERRIDES:-${AGENT_PROFILES_OVERRIDES:-}}
+    ports:
+      - "127.0.0.1:${DPL_PVAN_PORT:-8001}:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - interview_workspaces:/data/workspaces
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; [urllib.request.urlopen('http://127.0.0.1:8000' + path, timeout=3).close() for path in ('/health/ready', '/inspect/', '/test/')]"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    init: true
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  redisinsight_data:
+  interview_workspaces:
+  minio_data:
+  # Legacy SQLite catalog volume: no longer mounted by app (DATABASE_URL is set); kept so
+  # existing data can be migrated with scripts/migrate_sqlite_to_postgres.py.
+  artifact_catalog:
+  postgres_data:

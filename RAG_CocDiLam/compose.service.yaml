@@ -1,0 +1,58 @@
+# ID_Q service only (CV/form intake + knowledge packs), for the root dpl compose to `include`.
+# Core (core_agent) and the gateway (backend) call it as http://rag-idq:8000; it holds no LLM key.
+# For this repo's own full stack keep using: docker compose -f compose.yaml -f compose.rag.yaml up
+name: dpl-pvan
+
+services:
+  rag-idq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Initialize ownership of the old UID-10002 volume, then drop to app UID-10001.
+    user: "0:0"
+    command: ["python", "-m", "rag.serve"]
+    environment:
+      # Bearer token of every backend caller (gateway, core). Same value in the gateway and core.
+      RAG_API_TOKEN: ${RAG_IDQ_API_TOKEN:-local-idq-api-token-change-before-production}
+      # Only core sends this one: it unlocks the evaluator pack (scoring anchors, expected answers).
+      RAG_CORE_TOKEN: ${RAG_CORE_TOKEN:-local-idq-core-token-change-before-production}
+      # Separate knowledge-admin secret (X-RAG-Admin-Token) for /api/v1/knowledge/imports and /rag/index.
+      # Empty = those endpoints accept only an admin UI session. Never reuse RAG_IDQ_API_TOKEN here.
+      RAG_KNOWLEDGE_ADMIN_TOKEN: ${RAG_KNOWLEDGE_ADMIN_TOKEN:-}
+      RAG_DB_PATH: /data/rag/index.db
+      RAG_INTAKE_DB_PATH: /data/rag/idq.sqlite3
+      RAG_INTAKE_ROOT: /data/rag/intakes
+      RAG_EMBEDDING_PROVIDER: lsa
+      RAG_ADMIN_PASSWORD: ${RAG_ADMIN_PASSWORD:-${DPL_RAG_ADMIN_PASSWORD:-local-rag-admin-change-me}}
+      RAG_ADMIN_STORAGE_DIR: /data/rag-admin
+      RAG_WEB_SEARCH_ENABLED: ${RAG_WEB_SEARCH_ENABLED:-true}
+      RAG_WEB_SEARCH_PROVIDER: ${RAG_WEB_SEARCH_PROVIDER:-auto}
+      BROWSERBASE_API_KEY: ${BROWSERBASE_API_KEY:-}
+      BRAVE_SEARCH_API_KEY: ${DOCKER_BRAVE_SEARCH_API_KEY:-}
+      RAG_WEB_SEARCH_TIMEOUT_SECONDS: ${RAG_WEB_SEARCH_TIMEOUT_SECONDS:-10}
+      RAG_WEB_SEARCH_MAX_RESULTS: ${RAG_WEB_SEARCH_MAX_RESULTS:-4}
+      RAG_WEB_SEARCH_MAX_PAGES: ${RAG_WEB_SEARCH_MAX_PAGES:-4}
+      RAG_WEB_RESEARCH_CACHE_TTL_SECONDS: ${RAG_WEB_RESEARCH_CACHE_TTL_SECONDS:-86400}
+      RAG_WEB_RESEARCH_TOTAL_SECONDS: ${RAG_WEB_RESEARCH_TOTAL_SECONDS:-12}
+    ports:
+      - "127.0.0.1:${DPL_RAG_PORT:-8200}:8000"
+    volumes:
+      - rag_index:/data/rag
+      - rag_admin_data:/data/rag-admin
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    init: true
+    restart: unless-stopped
+
+volumes:
+  rag_index:
+  rag_admin_data:
+    name: dpl-pvan_rag_service_data

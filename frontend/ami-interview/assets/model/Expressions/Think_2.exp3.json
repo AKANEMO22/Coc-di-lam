@@ -1,0 +1,22 @@
+{
+	"Type": "Live2D Expression",
+	"FadeInTime": 0.4,
+	"FadeOutTime": 0.4,
+	"Parameters": [
+		{
+			"Id": "ParamAngleZTrack",
+			"Value": 4.177,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleYTrack",
+			"Value": 5.696,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"Value": 0.54,
+			"Blend": "Add"
+		}
+	]
+}

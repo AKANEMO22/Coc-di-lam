@@ -1,0 +1,9 @@
+# Override for core_agent/compose.yaml when run from the root compose: core takes its knowledge
+# packs from the ID_Q service inside the compose network (no in-process RAG).
+services:
+  app:
+    environment:
+      RAG_IDQ_BASE_URL: http://rag-idq:8000
+    depends_on:
+      rag-idq:
+        condition: service_healthy

@@ -1,0 +1,22 @@
+# The stack's only entry point from the network (nginx). The interview UI is public; every admin
+# tool needs the edge login (EDGE_ADMIN_USER / EDGE_ADMIN_PASSWORD from core_agent/.env).
+# Every other service publishes on 127.0.0.1 of the host only. On CT 104 the pipeline binds these
+# ports to the configured bind-address (e.g. 0.0.0.0) and leaves the other services on 127.0.0.1.
+services:
+  edge:
+    build:
+      context: env/edge
+    environment:
+      EDGE_ADMIN_USER: ${EDGE_ADMIN_USER:-admin}
+      EDGE_ADMIN_PASSWORD: ${EDGE_ADMIN_PASSWORD:?set EDGE_ADMIN_PASSWORD in core_agent/.env}
+    ports:
+      - "127.0.0.1:${DPL_WEB_PORT:-8030}:8080"   # interview UI (public)
+      - "127.0.0.1:8031:8081"                     # core Studio /test/ and /inspect/
+      - "127.0.0.1:8032:8082"                     # RAG / ID_Q (/idq/, knowledge admin)
+      - "127.0.0.1:8033:8083"                     # MinIO console
+      - "127.0.0.1:8034:8084"                     # RedisInsight
+      - "127.0.0.1:8035:8085"                     # speech service test page
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped

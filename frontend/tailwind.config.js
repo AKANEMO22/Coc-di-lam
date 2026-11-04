@@ -1,0 +1,1 @@
+export default { content: ['./index.html','./src/**/*.{js,jsx}'], theme: { extend: { fontFamily: { sans: ['Nunito','ui-sans-serif','sans-serif'] }, colors: { ink: '#23345c', primary: '#3478f6' }, boxShadow: { glass: '0 18px 55px rgba(52,79,140,.13)' } } }, plugins: [] };

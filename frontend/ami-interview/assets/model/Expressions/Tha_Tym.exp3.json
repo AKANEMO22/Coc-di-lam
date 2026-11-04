@@ -1,0 +1,62 @@
+{
+	"Type": "Live2D Expression",
+	"FadeInTime": 0.35,
+	"FadeOutTime": 0.35,
+	"Parameters": [
+		{
+			"Id": "Param_D_Hand_On",
+			"Value": 10,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Param_OG_Hand_R_Off",
+			"Value": 10,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamD_Heart",
+			"Value": 7.123,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleZTrack",
+			"Value": 17.466,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamBodyAngleZTrack",
+			"Value": -2.808,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"Value": -1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"Value": 0,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"Value": 1,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"Value": 0.521,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"Value": 0.712,
+			"Blend": "Add"
+		}
+	]
+}

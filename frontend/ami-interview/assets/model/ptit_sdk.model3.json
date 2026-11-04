@@ -1,0 +1,232 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "PTIT_SDK.moc3",
+    "Textures": [
+      "PTIT_SDK.4096/texture_00.png",
+      "PTIT_SDK.4096/texture_01.png",
+      "PTIT_SDK.4096/texture_02.png",
+      "PTIT_SDK.4096/texture_03.png"
+    ],
+    "Physics": "PTIT_SDK.physics3.json",
+    "DisplayInfo": "PTIT_SDK.cdi3.json",
+    "Expressions": [
+      {
+        "Name": "Angry",
+        "File": "Expressions/Angry.exp3.json"
+      },
+      {
+        "Name": "Blush",
+        "File": "Expressions/Blush.exp3.json"
+      },
+      {
+        "Name": "Default",
+        "File": "Expressions/Default.exp3.json"
+      },
+      {
+        "Name": "Excited",
+        "File": "Expressions/Excited.exp3.json"
+      },
+      {
+        "Name": "Glasses Toggle",
+        "File": "Expressions/Glasses_Toggle.exp3.json"
+      },
+      {
+        "Name": "Happy",
+        "File": "Expressions/Happy.exp3.json"
+      },
+      {
+        "Name": "Jacket Toggle",
+        "File": "Expressions/Jacket_Toggle.exp3.json"
+      },
+      {
+        "Name": "Sad",
+        "File": "Expressions/Sad.exp3.json"
+      },
+      {
+        "Name": "Think_1",
+        "File": "Expressions/Think_1.exp3.json"
+      },
+      {
+        "Name": "Think_2",
+        "File": "Expressions/Think_2.exp3.json"
+      },
+      {
+        "Name": "Tha_Tym",
+        "File": "Expressions/Tha_Tym.exp3.json"
+      },
+      {
+        "Name": "Vay_Tay_1",
+        "File": "Expressions/Vay_Tay_1.exp3.json"
+      },
+      {
+        "Name": "Vay_Tay_2",
+        "File": "Expressions/Vay_Tay_2.exp3.json"
+      },
+      {
+        "Name": "Chong_Nanh",
+        "File": "Expressions/Chong_Nanh.exp3.json"
+      },
+      {
+        "Name": "Chong_Nanh2",
+        "File": "Expressions/Chong_Nanh2.exp3.json"
+      },
+      {
+        "Name": "Writting",
+        "File": "Expressions/Writting.exp3.json"
+      },
+      {
+        "Name": "No_Jacket_Glasses",
+        "File": "Expressions/No_Jacket_Glasses.exp3.json"
+      }
+    ],
+    "Motions": {
+      "Checkin1": [
+        {
+          "File": "Motions/Checkin_3.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Checkin2": [
+        {
+          "File": "Motions/Wave_1.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Checkin3": [
+        {
+          "File": "Motions/Wave_2.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Head_Nod": [
+        {
+          "File": "Motions/Head_Nod.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Head_Shake": [
+        {
+          "File": "Motions/Head_Shake.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Heart": [
+        {
+          "File": "Motions/Tha_Tym.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Hitbox1": [
+        {
+          "File": "Motions/Hitbox_1.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Hitbox2": [
+        {
+          "File": "Motions/Hitbox_2.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Hitbox3": [
+        {
+          "File": "Motions/Hitbox_3.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Hitbox4": [
+        {
+          "File": "Motions/Hitbox_4.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Hitbox5": [
+        {
+          "File": "Motions/Hitbox_5.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Idle1": [
+        {
+          "File": "Motions/Idle_2.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Idle2": [
+        {
+          "File": "Motions/Idle_3.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Idle3": [
+        {
+          "File": "Motions/Idle_4.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Idle4": [
+        {
+          "File": "Motions/Idle_5.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "Reading": [
+        {
+          "File": "Motions/Writting.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ],
+      "ThinkDouble": [
+        {
+          "File": "Motions/Think_Double.motion3.json",
+          "FadeInTime": 0,
+          "FadeOutTime": 0
+        }
+      ]
+    }
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthOpenY"
+      ]
+    }
+  ],
+  "HitAreas": [
+    {
+      "Id": "HitArea_Body",
+      "Name": ""
+    },
+    {
+      "Id": "HitArea_Head",
+      "Name": ""
+    }
+  ]
+}

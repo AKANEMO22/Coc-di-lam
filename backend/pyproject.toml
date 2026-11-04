@@ -1,0 +1,26 @@
+[project]
+name = "interview-backend"
+version = "1.0.0"
+description = "Gateway between the interview frontend, the core AI and the speech (STT/TTS) service"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "httpx>=0.27.0",
+    "websockets>=13.0",
+    "pydantic-settings>=2.4.0",
+    "python-multipart>=0.0.20",
+    "pyjwt>=2.8.0",
+    "beautifulsoup4>=4.12.0",
+    "pypdf>=5.0.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

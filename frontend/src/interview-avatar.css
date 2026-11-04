@@ -1,0 +1,89 @@
+.interview-stage .stage-content {
+  width: 100%;
+  max-width: 900px;
+  padding: 16px 24px;
+}
+
+.interview-stage .live2d-frame {
+  width: 100%;
+  margin: 12px auto 16px;
+}
+
+.interview-stage .live2d-frame .linh-room {
+  width: min(100%, 780px);
+  height: clamp(220px, 34vh, 330px);
+  min-height: 200px;
+  margin: 0 auto;
+  border-radius: 20px;
+  box-shadow: 0 14px 34px #34415b33;
+}
+
+.interview-stage .live2d-frame.linh-minimal .linh-room {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  isolation: auto;
+  overflow: visible;
+}
+
+.interview-stage .gateway-ui.live2d-frame.linh-minimal {
+  background: transparent;
+}
+
+.interview-stage .live2d-frame.linh-minimal .window-light,
+.interview-stage .live2d-frame.linh-minimal .plant,
+.interview-stage .live2d-frame.linh-minimal .desk,
+.interview-stage .live2d-frame.linh-minimal .linh-caption,
+.interview-stage .live2d-frame.linh-minimal .gesture-dock {
+  display: none;
+}
+
+.interview-stage .stage-content h1 {
+  margin: 0 0 4px;
+  font-size: clamp(21px, 2.5vw, 33px);
+  line-height: 1.25;
+}
+
+.interview-stage .stage-content > p {
+  margin: 0 0 14px;
+  color: #506185;
+}
+
+.interview-stage .question-panel {
+  padding: 14px 20px;
+}
+
+@media (max-width: 850px) {
+  .interview-stage .stage-content {
+    padding: 14px 16px;
+  }
+
+  .interview-stage .live2d-frame {
+    margin: 8px auto 12px;
+  }
+
+  .interview-stage .live2d-frame .linh-room {
+    height: clamp(180px, 28vh, 240px);
+    min-height: 180px;
+  }
+
+  .interview-stage .question-panel {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 550px) {
+  .interview-stage .stage-content {
+    padding: 10px;
+  }
+
+  .interview-stage .stage-tag {
+    font-size: 10px;
+    padding: 7px 12px;
+  }
+
+  .interview-stage .question-panel strong {
+    font-size: 14px;
+  }
+}

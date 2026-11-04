@@ -1,0 +1,602 @@
+/* Keep short workspaces inside the viewport; scroll only the data regions. */
+.coc-login-scene {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workspace-shell.viewport-fit-shell {
+  height: 100dvh;
+  min-height: 0;
+  padding: 14px 20px;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.workspace-shell.viewport-fit-shell > .sidebar {
+  height: calc(100dvh - 28px);
+  min-height: 0;
+}
+
+.workspace-content.viewport-fit-content {
+  height: calc(100dvh - 28px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.viewport-fit-content > .topbar {
+  flex: 0 0 auto;
+  margin-bottom: 9px;
+}
+
+/* Home: calendar stays in place, long interview history scrolls in its panel. */
+.viewport-fit-home-content .coc-home {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 2px 0 4px;
+}
+
+.viewport-fit-home-content .coc-home-header {
+  flex: 0 0 auto;
+  align-items: stretch;
+  gap: clamp(12px, 1.5vw, 24px);
+  margin-bottom: clamp(10px, 1.3vh, 16px);
+}
+
+.viewport-fit-home-content .coc-home-welcome {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.viewport-fit-home-content .coc-home-welcome h1 {
+  margin: 12px 0 7px;
+  font-size: clamp(27px, 3vw, 44px);
+}
+
+.viewport-fit-home-content .coc-home-welcome p {
+  margin: 0;
+  font-size: clamp(13px, 1.15vw, 16px);
+}
+
+.viewport-fit-home-content .coc-home-widgets {
+  flex: 0 0 auto;
+  width: auto;
+  gap: 12px;
+}
+
+.viewport-fit-home-content .coc-calendar {
+  width: clamp(215px, 25vw, 320px);
+  padding: clamp(12px, 1.15vw, 18px);
+}
+
+.viewport-fit-home-content .coc-calendar-header {
+  margin-bottom: 9px;
+}
+
+.viewport-fit-home-content .coc-calendar-day {
+  height: clamp(29px, 4vh, 38px);
+}
+
+.viewport-fit-home-content .coc-calendar-legend {
+  margin-top: 6px;
+}
+
+.viewport-fit-home-content .coc-streak {
+  width: clamp(112px, 13vw, 165px);
+  min-height: 0;
+  padding: clamp(12px, 1.2vw, 18px) 10px;
+}
+
+.viewport-fit-home-content .coc-streak-number {
+  margin: 12px 0 6px;
+}
+
+.viewport-fit-home-content .coc-streak-number strong {
+  font-size: clamp(38px, 4vw, 52px);
+}
+
+.viewport-fit-home-content .coc-streak > p {
+  margin-top: 8px;
+}
+
+.viewport-fit-home-content .coc-daily-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(18px, 2vw, 32px) clamp(20px, 2.5vw, 42px);
+}
+
+.viewport-fit-home-content .coc-daily-panel-header {
+  flex: 0 0 auto;
+  gap: 12px;
+}
+
+.viewport-fit-home-content .coc-daily-panel-header h2 {
+  margin: 8px 0 5px;
+  font-size: clamp(22px, 2vw, 28px);
+}
+
+.viewport-fit-home-content .coc-daily-empty {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 10px;
+  padding: 12px;
+}
+
+.viewport-fit-home-content .coc-daily-empty-icon {
+  width: clamp(58px, 7vw, 82px);
+  height: clamp(58px, 7vw, 82px);
+  border-radius: 23px;
+}
+
+.viewport-fit-home-content .coc-daily-empty-icon svg {
+  width: clamp(34px, 4vw, 46px);
+}
+
+.viewport-fit-home-content .coc-daily-empty p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.viewport-fit-home-content .coc-start-button {
+  margin-top: 2px;
+}
+
+.viewport-fit-home-content .coc-daily-history {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 12px;
+}
+
+.viewport-fit-home-content .coc-daily-history-summary,
+.viewport-fit-home-content .coc-daily-history-footer {
+  flex: 0 0 auto;
+}
+
+.viewport-fit-home-content .coc-daily-history-summary {
+  margin-bottom: 10px;
+}
+
+.viewport-fit-home-content .coc-daily-session-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px 4px 5px 0;
+  scrollbar-width: thin;
+}
+
+.viewport-fit-home-content .coc-daily-history-footer {
+  padding-top: 10px;
+}
+
+/* Interview history: only a long session list gets its own scrollbar. */
+.viewport-fit-results-content > .session-history {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.viewport-fit-results-content .session-history-header {
+  flex: 0 0 auto;
+  gap: 10px 14px;
+  margin-bottom: 2px;
+}
+
+.viewport-fit-results-content .session-history-header > div {
+  flex: 1 1 100%;
+}
+
+.viewport-fit-results-content .session-history-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  align-content: start;
+  padding: 2px 5px 5px 0;
+  scrollbar-width: thin;
+}
+
+.viewport-fit-results-content > .session-history > p {
+  flex: 0 0 auto;
+  margin: 5px 0;
+}
+
+/* Job search: keep filters and pagination visible while result cards scroll. */
+.viewport-fit-jobs-content .viewport-fit-jobs-page {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 3px 0 4px;
+}
+
+.viewport-fit-jobs-content .jobs-heading {
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 10px;
+}
+
+.viewport-fit-jobs-content .jobs-heading h1 {
+  margin-bottom: 3px;
+  font-size: clamp(22px, 2.2vw, 28px);
+}
+
+.viewport-fit-jobs-content .jobs-heading p {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.viewport-fit-jobs-content .jobs-filters-compact {
+  flex: 0 0 auto;
+  gap: 8px 12px;
+  padding: 9px 12px;
+  margin-bottom: 9px;
+}
+
+.viewport-fit-jobs-content .jobs-results-region {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.viewport-fit-jobs-content .jobs-list-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 3px 5px 8px 2px;
+  scrollbar-width: thin;
+}
+
+.viewport-fit-jobs-content .jobs-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  align-content: start;
+  gap: 14px;
+}
+
+.viewport-fit-jobs-content .jobs-empty {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.viewport-fit-jobs-content .jobs-pagination {
+  flex: 0 0 auto;
+  gap: 8px;
+  margin-top: 7px;
+  padding: 8px 12px;
+}
+
+/* Interview preparation uses a fixed frame and an internally scrollable CV list. */
+.workspace-shell.cv-prepare-shell {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.workspace-shell.cv-prepare-shell > .sidebar {
+  height: calc(100dvh - 28px);
+  min-height: 0;
+}
+
+.workspace-content.cv-prepare-content {
+  height: calc(100dvh - 28px);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cv-prepare-content .cv-prepare {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cv-prepare-content .cv-selection-list {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Legacy preview room also uses the full viewport on desktop. */
+@media (min-width: 851px) {
+  .interview-shell {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding: clamp(10px, 1.5vh, 18px) clamp(14px, 2vw, 28px);
+    gap: 10px;
+  }
+
+  .interview-layout {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .interview-stage,
+  .transcript {
+    min-height: 0;
+  }
+
+  .transcript {
+    height: 100%;
+    max-height: none;
+  }
+}
+
+@media (max-width: 850px) {
+  .interview-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 701px) {
+  .viewport-fit-home-content .coc-home-header { margin-bottom: 10px; }
+  .viewport-fit-home-content .coc-calendar { padding: 10px 12px; }
+  .viewport-fit-home-content .coc-calendar-day { height: 29px; }
+  .viewport-fit-home-content .coc-streak-number { margin: 7px 0 4px; }
+  .viewport-fit-home-content .coc-streak > p { font-size: 11px; line-height: 1.35; }
+  .viewport-fit-home-content .coc-daily-panel { padding-top: 16px; padding-bottom: 14px; }
+  .viewport-fit-jobs-content .job-card { padding: 16px; }
+}
+
+@media (max-width: 700px) {
+  .coc-login-scene {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .workspace-shell.viewport-fit-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    align-items: flex-start;
+  }
+
+  .workspace-shell.viewport-fit-shell > .sidebar {
+    height: calc(100dvh - 20px);
+  }
+
+  .workspace-content.viewport-fit-content {
+    height: auto;
+    min-height: calc(100dvh - 20px);
+    overflow: visible;
+  }
+
+  .viewport-fit-content > .topbar { margin-bottom: 8px; }
+
+  .viewport-fit-home-content .coc-home {
+    flex: 0 0 auto;
+    overflow: visible;
+    padding: 0 0 12px;
+  }
+
+  .viewport-fit-home-content .coc-home-header {
+    flex-direction: column;
+    margin-bottom: 14px;
+  }
+
+  .viewport-fit-home-content .coc-home-widgets {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .viewport-fit-home-content .coc-calendar,
+  .viewport-fit-home-content .coc-streak { width: 100%; }
+
+  .viewport-fit-home-content .coc-streak { min-height: 150px; }
+
+  .viewport-fit-home-content .coc-daily-panel {
+    flex: 0 0 auto;
+    min-height: 360px;
+    overflow: visible;
+    padding: 22px 16px;
+  }
+
+  .viewport-fit-home-content .coc-daily-empty { min-height: 250px; }
+
+  .viewport-fit-home-content .coc-daily-history { overflow: visible; }
+
+  .viewport-fit-home-content .coc-daily-session-list {
+    flex: 0 1 auto;
+    max-height: 45dvh;
+  }
+
+  .workspace-shell.cv-prepare-shell {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .workspace-content.cv-prepare-content {
+    height: calc(100dvh - 20px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .cv-prepare-content .cv-prepare {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .cv-prepare-content .cv-selection-list { max-height: 30dvh; }
+}
+
+@media (max-width: 550px) {
+  .workspace-shell.viewport-fit-shell {
+    height: auto;
+    min-height: 100dvh;
+  }
+}
+
+/* ---- Fixed-frame workspace (desktop/tablet landscape) ----
+   The shell is exactly one viewport tall; sidebar and content stretch to its content box, so their height
+   no longer depends on the shell padding (styles.css sets 30px 26px while the old calc() assumed 14px,
+   which pushed every page 32px past the bottom edge). Regions scroll inside instead of being cut off. */
+#root { overflow-x: clip; }
+
+@media (min-width: 701px) {
+  .workspace-shell.viewport-fit-shell,
+  .workspace-shell.cv-prepare-shell,
+  .workspace-shell.cv-library-shell {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    align-items: stretch;
+    padding: clamp(8px, 2.2vh, 30px) clamp(10px, 1.9vw, 26px);
+    gap: clamp(9px, 1.3vw, 18px);
+  }
+
+  .workspace-shell.viewport-fit-shell > .sidebar,
+  .workspace-shell.cv-prepare-shell > .sidebar,
+  .workspace-shell.cv-library-shell > .sidebar {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+    align-self: stretch;
+    overflow-y: auto;
+  }
+
+  .workspace-shell.viewport-fit-shell > .workspace-content,
+  .workspace-shell.cv-prepare-shell > .workspace-content,
+  .workspace-shell.cv-library-shell > .workspace-content {
+    height: auto;
+    min-height: 0;
+    margin: 0 auto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Short screens: the page body scrolls inside its frame rather than clipping its last rows. */
+  .cv-prepare-content .cv-prepare { overflow-y: auto; overscroll-behavior: contain; }
+  .cv-prepare-content .cv-prepare .cv-selection-list { min-height: 64px; }
+  .viewport-fit-home-content .coc-home { overflow-y: auto; overscroll-behavior: contain; }
+  .viewport-fit-home-content .coc-daily-panel { min-height: min(260px, 100%); }
+}
+
+@media (max-height: 640px) and (min-width: 701px) {
+  .cv-prepare-content > .topbar,
+  .viewport-fit-content > .topbar { margin-bottom: 6px; }
+  .cv-prepare-content .cv-prepare-heading p { display: none; }
+}
+
+/* ---- Topbar on phones: search shrinks, profile keeps its size, nothing leaves the screen ---- */
+@media (max-width: 700px) {
+  .topbar { gap: 8px; min-width: 0; }
+  .topbar .search-wrap { flex: 1 1 auto; width: auto; min-width: 0; }
+  .topbar .coc-profile-wrapper { flex: 0 0 auto; }
+  .workspace-content { min-width: 0; max-width: 100%; }
+}
+
+@media (max-height: 700px) and (min-width: 701px) {
+  .viewport-fit-home-content .coc-daily-panel { flex: 1 0 auto; }
+}
+
+/* ===== Tab switching: no zoom, only the content softly appears ===== */
+@keyframes page-content-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+/* "backwards" fill: once done the content keeps no transform, so fixed modals inside stay fixed. */
+.workspace-content,
+.ready-workspace-main { animation: page-content-in .2s ease-out backwards; }
+
+/* Blur behind many glass cards at once is what made scrolling and tab switches stutter. */
+.glass { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+.route-loading {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center; gap: 10px;
+  color: #4b5f83; font-weight: 800; background: #eaf2ff;
+}
+.route-loading-dot {
+  width: 12px; height: 12px; border-radius: 50%; background: #367cf6;
+  animation: route-loading-pulse 1s ease-in-out infinite;
+}
+@keyframes route-loading-pulse { 50% { transform: scale(.6); opacity: .5; } }
+.route-loading[role="alert"] { flex-direction: column; padding: 0 16px; text-align: center; }
+.route-retry {
+  border: 0; border-radius: 10px; padding: 9px 18px; cursor: pointer;
+  background: #367cf6; color: #fff; font: inherit; font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workspace-content, .ready-workspace-main { animation: none; }
+}
+
+.topbar-spacer { flex: 1; }
+.coc-menu-user > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.coc-menu-user strong { color: #26385d; font-size: 14px; }
+.coc-menu-user small { color: #73829d; font-size: 12px; }
+
+/* ===== Floating toasts (src/components/Toaster.jsx) ===== */
+.toast-stack {
+  position: fixed; top: 18px; right: 18px; z-index: 5000;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  width: min(380px, calc(100vw - 32px)); pointer-events: none;
+}
+.toast-item {
+  position: relative; overflow: hidden; pointer-events: auto;
+  display: flex; align-items: flex-start; gap: 10px; width: 100%;
+  padding: 12px 12px 13px 14px; border-radius: 14px;
+  background: #ffffff; border: 1px solid #e3e9f4; border-left: 4px solid var(--toast-accent);
+  box-shadow: 0 12px 32px rgba(30, 45, 80, .18), 0 2px 6px rgba(30, 45, 80, .08);
+  color: #26385d; font: 600 13.5px/1.45 Nunito, ui-sans-serif, sans-serif;
+}
+.toast-item p { flex: 1; min-width: 0; margin: 1px 0 0; overflow-wrap: anywhere; }
+.toast-icon { flex: 0 0 auto; margin-top: 1px; color: var(--toast-accent); }
+.toast-info { --toast-accent: #367cf6; }
+.toast-success { --toast-accent: #22a06b; }
+.toast-warn { --toast-accent: #e39a1d; }
+.toast-error { --toast-accent: #dc4c43; }
+.toast-action {
+  flex: 0 0 auto; border: 0; border-radius: 8px; padding: 4px 10px;
+  background: color-mix(in srgb, var(--toast-accent) 12%, white); color: var(--toast-accent);
+  font: inherit; font-weight: 800; cursor: pointer;
+}
+.toast-action:hover { background: color-mix(in srgb, var(--toast-accent) 20%, white); }
+.toast-close {
+  flex: 0 0 auto; display: grid; place-items: center; width: 24px; height: 24px; margin: -2px -2px 0 0;
+  border: 0; border-radius: 7px; background: transparent; color: #8592aa; cursor: pointer;
+}
+.toast-close:hover { background: #eef2f9; color: #26385d; }
+.toast-progress {
+  position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+  background: var(--toast-accent); opacity: .35; transform-origin: left;
+  animation: toast-progress linear forwards;
+}
+.toast-item:hover .toast-progress { visibility: hidden; }
+@keyframes toast-progress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (max-width: 600px) {
+  .toast-stack { top: auto; bottom: 16px; right: 16px; left: 16px; width: auto; align-items: stretch; }
+}

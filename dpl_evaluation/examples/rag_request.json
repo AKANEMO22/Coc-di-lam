@@ -1,0 +1,11 @@
+{
+  "role_id": "IF_AGENTIC_AI",
+  "target_level": "Junior",
+  "query": "Tôi xây chatbot RAG với vector database. Hãy kiểm tra retrieval, embedding và chất lượng câu trả lời.",
+  "required_skills": ["RAG", "embedding", "vector database"],
+  "mode": "hybrid",
+  "stage": 2,
+  "top_k": 3,
+  "token_budget": 24000,
+  "tenant_id": "local"
+}

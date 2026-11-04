@@ -1,0 +1,227 @@
+
+/* ===== INTERVIEW CONTROLS ===== */
+
+.coc-room-footer {
+  gap: 14px;
+}
+
+.coc-meeting-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-radius: 40px;
+  flex-wrap: wrap;
+}
+
+.coc-meeting-controls .control-btn {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  border: 0;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.coc-meeting-controls .control-btn:hover {
+  transform: translateY(-3px);
+}
+
+.coc-tool-active {
+  background: #dceaff !important;
+  color: #2166d7 !important;
+}
+
+.coc-meeting-controls .control-danger {
+  background: #ef4444 !important;
+  color: white !important;
+}
+
+.coc-webcam-preview {
+  position: absolute;
+  bottom: 50px;
+  right: 25px;
+  width: 205px;
+  aspect-ratio: 16 / 10;
+  background: #162236;
+  border: 3px solid white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px #0003;
+  z-index: 10;
+}
+
+.coc-webcam-preview video,
+.coc-sharing-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coc-webcam-preview video {
+  transform: scaleX(-1);
+}
+
+.coc-webcam-preview span,
+.coc-sharing-preview span {
+  position: absolute;
+  bottom: 5px;
+  left: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #0009;
+  color: white;
+  font-size: 11px;
+}
+
+.coc-sharing-preview {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 260px;
+  aspect-ratio: 16 / 9;
+  background: #172338;
+  border: 3px solid white;
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 9;
+}
+
+.coc-raised-hand {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  z-index: 12;
+  padding: 10px 15px;
+  background: white;
+  border-radius: 30px;
+  color: #344c70;
+  font-weight: 700;
+  box-shadow: 0 8px 20px #0002;
+}
+
+.coc-recording-indicator {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border-radius: 30px;
+  background: #fff;
+  color: #dc2626;
+  font-weight: 800;
+  z-index: 15;
+}
+
+.coc-recording-indicator span {
+  width: 10px;
+  height: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: coc-record-blink 1s infinite;
+}
+
+@keyframes coc-record-blink {
+  50% { opacity: .2; }
+}
+
+.coc-more-wrapper {
+  position: relative;
+}
+
+.coc-more-menu {
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  padding: 9px;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 10px 35px #0002;
+  z-index: 30;
+}
+
+.coc-more-menu button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: #344c70;
+}
+
+.coc-more-menu button:hover {
+  background: #edf4ff;
+}
+
+.coc-recording-download {
+  position: fixed;
+  bottom: 105px;
+  right: 25px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 17px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 12px 35px #0002;
+  color: #344c70;
+}
+
+.coc-recording-download button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: #eaf2ff;
+  color: #286be0;
+  padding: 8px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .coc-room-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .coc-meeting-controls {
+    order: -1;
+    width: 100%;
+  }
+
+  .coc-webcam-preview {
+    width: 145px;
+    right: 12px;
+    bottom: 20px;
+  }
+
+  .coc-sharing-preview {
+    width: 175px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coc-recording-indicator span {
+    animation: none;
+  }
+
+  .coc-meeting-controls .control-btn:hover {
+    transform: none;
+  }
+}

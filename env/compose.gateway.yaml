@@ -1,0 +1,26 @@
+# Override for backend/compose.yaml when run from the root compose: reach core, speech and the ID_Q
+# service inside the compose network instead of through the host, and sign core tokens with the
+# core's own secret.
+services:
+  gateway:
+    environment:
+      CORE_URL: http://app:8000
+      SPEECH_URL: http://speech:8000
+      RAG_URL: http://rag-idq:8000
+      CORE_JWT_SECRET: ${DOCKER_JWT_SECRET:-local-compose-development-secret-change-before-production}
+      RAG_API_TOKEN: ${RAG_IDQ_API_TOKEN:-local-idq-api-token-change-before-production}
+      # The gateway is only reached through edge -> web nginx, which set X-Real-IP to the client address.
+      TRUST_PROXY_HEADERS: "true"
+      # open = any username signs in without a password; each username only sees its own sessions,
+      # CVs, reports and streak. AUTH_REQUIRED=true in backend/.env still selects student-id sign-in.
+      AUTH_MODE: ${GATEWAY_AUTH_MODE:-open}
+    depends_on:
+      app:
+        condition: service_healthy
+      speech:
+        condition: service_healthy
+      rag-idq:
+        condition: service_healthy
+  web:
+    # Reached only through the edge (compose.edge.yaml), which publishes the UI port instead.
+    ports: !reset []

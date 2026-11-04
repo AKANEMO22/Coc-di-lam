@@ -1,0 +1,61 @@
+name: dpl-pvan
+
+services:
+  rag-idq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Initialize ownership of the old UID-10002 volume, then drop to app UID-10001.
+    user: "0:0"
+    command: ["python", "-m", "rag.serve"]
+    environment:
+      RAG_API_TOKEN: ${RAG_IDQ_API_TOKEN:?Set RAG_IDQ_API_TOKEN in .env}
+      RAG_CORE_TOKEN: ${RAG_CORE_TOKEN:?Set RAG_CORE_TOKEN in .env}
+      # Separate knowledge-admin secret (X-RAG-Admin-Token); empty = admin UI session only.
+      RAG_KNOWLEDGE_ADMIN_TOKEN: ${RAG_KNOWLEDGE_ADMIN_TOKEN:-}
+      RAG_DB_PATH: /data/rag/index.db
+      RAG_INTAKE_DB_PATH: /data/rag/idq.sqlite3
+      RAG_INTAKE_ROOT: /data/rag/intakes
+      RAG_EMBEDDING_PROVIDER: lsa
+      RAG_ADMIN_PASSWORD: ${RAG_ADMIN_PASSWORD:-${DPL_RAG_ADMIN_PASSWORD:-local-rag-admin-change-me}}
+      RAG_ADMIN_STORAGE_DIR: /data/rag-admin
+      RAG_WEB_SEARCH_ENABLED: ${RAG_WEB_SEARCH_ENABLED:-true}
+      RAG_WEB_SEARCH_PROVIDER: ${RAG_WEB_SEARCH_PROVIDER:-auto}
+      BROWSERBASE_API_KEY: ${BROWSERBASE_API_KEY:-}
+      BRAVE_SEARCH_API_KEY: ${DOCKER_BRAVE_SEARCH_API_KEY:-}
+      RAG_WEB_SEARCH_TIMEOUT_SECONDS: ${RAG_WEB_SEARCH_TIMEOUT_SECONDS:-10}
+      RAG_WEB_SEARCH_MAX_RESULTS: ${RAG_WEB_SEARCH_MAX_RESULTS:-4}
+      RAG_WEB_SEARCH_MAX_PAGES: ${RAG_WEB_SEARCH_MAX_PAGES:-4}
+      RAG_WEB_RESEARCH_CACHE_TTL_SECONDS: ${RAG_WEB_RESEARCH_CACHE_TTL_SECONDS:-86400}
+      RAG_WEB_RESEARCH_TOTAL_SECONDS: ${RAG_WEB_RESEARCH_TOTAL_SECONDS:-12}
+    ports:
+      - "127.0.0.1:8200:8000"
+    volumes:
+      - rag_index:/data/rag
+      - rag_admin_data:/data/rag-admin
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    init: true
+    restart: unless-stopped
+
+  app:
+    depends_on:
+      rag-idq:
+        condition: service_healthy
+    environment:
+      RAG_IDQ_BASE_URL: http://rag-idq:8000
+      RAG_IDQ_API_TOKEN: ${RAG_IDQ_API_TOKEN:?Set RAG_IDQ_API_TOKEN in .env}
+      RAG_CORE_TOKEN: ${RAG_CORE_TOKEN:?Set RAG_CORE_TOKEN in .env}
+      CORS_ALLOWED_ORIGINS: '["http://127.0.0.1:8200","http://localhost:8200"]'
+
+volumes:
+  rag_admin_data:
+    name: dpl-pvan_rag_service_data

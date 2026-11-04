@@ -1,0 +1,39 @@
+.brand-logo {
+  display: block;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.sidebar-promo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 136px;
+  margin-top: auto;
+  padding: 14px 11px 10px 14px;
+  overflow: hidden;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #fff1d9, #ffe2bd);
+  color: #cf541a;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.sidebar-promo strong { font-size: 15px; }
+.sidebar-promo img {
+  width: 96px;
+  height: 100px;
+  flex: 0 0 auto;
+  align-self: flex-end;
+  margin: 0 -10px -13px -23px;
+  object-fit: contain;
+}
+.sidebar-promo + .logout { margin-top: 12px; }
+
+@media (max-width: 850px) {
+  .sidebar-promo { display: none; }
+}

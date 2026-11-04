@@ -1,0 +1,35 @@
+# Whole stack, built from each repo: core AI (+ Postgres, Redis, MinIO), ID_Q/RAG service, speech
+# (STT/TTS), gateway, web UI.
+#
+#   docker compose up -d --build        →  web UI  http://127.0.0.1:8030
+#
+# Only the edge (nginx, compose.edge.yaml) is meant to be reached from the network: 8030 is the
+# public UI, 8031-8035 are admin tools behind the edge login (EDGE_ADMIN_PASSWORD in core_agent/.env).
+#
+# Each repo keeps its own compose.yaml and .env (read for that repo's settings); this file only
+# includes them and points the services at each other by name.
+# Same project name as core_agent/compose.yaml, so the existing Postgres/Redis/MinIO/workspace
+# volumes (dpl-pvan_*) are reused instead of starting from empty databases.
+#
+# CV/form flow: web → gateway → rag-idq (intake + knowledge pack, returns id_q/pack_id)
+#                     gateway → app POST /api/v1/sessions/from-idq → app fetches the pack from rag-idq.
+# RAG_IDQ_API_TOKEN / RAG_CORE_TOKEN are read from core_agent/.env (or the local defaults) by all three.
+name: dpl-pvan
+
+include:
+  - path:
+      - core_agent/compose.yaml
+      - compose.core.yaml
+  - path: RAG_CocDiLam/compose.service.yaml
+    env_file:
+      - core_agent/.env
+  - core-tts-stt/compose.yaml
+  - path:
+      - backend/compose.yaml
+      - compose.gateway.yaml
+    # Interpolation values for the gateway override: the core's JWT secret lives in core_agent/.env.
+    env_file:
+      - core_agent/.env
+  - path: compose.edge.yaml
+    env_file:
+      - core_agent/.env

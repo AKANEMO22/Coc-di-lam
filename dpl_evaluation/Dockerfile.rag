@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements-rag.txt ./
+RUN pip install --no-cache-dir -r requirements-rag.txt
+COPY src ./src
+COPY data/interview_frameworks.json data/candidates.json data/jobs_below_mid.json ./data/
+COPY examples ./examples
+ENV RAG_DB_PATH=/app/data/rag/index.db RAG_DEVICE=cpu
+# Build the index as a separate one-off command against the persistent volume.
+# Tokens are runtime secrets; never bake .env into the image.
+EXPOSE 8000
+CMD ["uvicorn", "src.rag.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

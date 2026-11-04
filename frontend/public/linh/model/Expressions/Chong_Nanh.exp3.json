@@ -1,0 +1,37 @@
+{
+	"Type": "Live2D Expression",
+	"FadeInTime": 0.35,
+	"FadeOutTime": 0.35,
+	"Parameters": [
+		{
+			"Id": "Param_OG_Hand_L_Off",
+			"Value": 10,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Param_B_Hand_On2",
+			"Value": 10,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleXTrack",
+			"Value": 12.74,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamAngleZTrack",
+			"Value": 14.795,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamBodyAngleZTrack",
+			"Value": -3.767,
+			"Blend": "Add"
+		},
+		{
+			"Id": "ParamBodyAngleXTrack",
+			"Value": 10,
+			"Blend": "Add"
+		}
+	]
+}

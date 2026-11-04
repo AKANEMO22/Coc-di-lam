@@ -1,0 +1,33 @@
+# Gateway + web UI. Core AI (core_agent, port 8001), speech service (core-tts-stt, port 8010) and the
+# ID_Q/RAG service (RAG_CocDiLam, port 8200) run from their own compose files; the containers reach
+# them through the host.
+services:
+  gateway:
+    build: .
+    env_file: .env
+    environment:
+      CORE_URL: ${DOCKER_CORE_URL:-http://host.docker.internal:8001}
+      SPEECH_URL: ${DOCKER_SPEECH_URL:-http://host.docker.internal:8010}
+      RAG_URL: ${DOCKER_RAG_URL:-http://host.docker.internal:8200}
+      JOB_SYNC_URL: ${DOCKER_JOB_SYNC_URL:-http://host.docker.internal:8050}
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-false}
+      DATABASE_PATH: /data/gateway.db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - gateway-data:/data
+    ports:
+      - "127.0.0.1:${GATEWAY_PORT:-8020}:8020"
+    restart: unless-stopped
+
+  web:
+    build: ../frontend
+    depends_on:
+      gateway:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8030}:8080"
+    restart: unless-stopped
+
+volumes:
+  gateway-data:

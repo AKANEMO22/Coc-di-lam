@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ami · Phòng phỏng vấn</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="assets/vendor/live2dcubismcore.min.js"></script>
+  <script defer src="assets/vendor/pixi.min.js"></script>
+  <script defer src="assets/vendor/cubism4.min.js"></script>
+  <script defer src="gestures.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<header><a class="brand" href="./"><span class="brand-icon">a</span> ami<span class="brand-sub">interview studio</span></a><span class="prototype">Bản thử nghiệm · Local</span></header>
+<main>
+  <section class="room" aria-label="Nhân vật phỏng vấn">
+    <div class="room-top"><span class="room-label">PHÒNG PHỎNG VẤN</span><span class="connection"><i></i><span id="connection">Đang chuẩn bị</span></span></div>
+    <div class="window-light"></div><div class="plant"><span></span><span></span><span></span></div>
+    <div id="stage"><canvas id="avatar" aria-label="Ami, nhân vật Live2D bán thân"></canvas></div>
+    <div class="desk"></div>
+    <div class="avatar-caption"><span class="live-dot"></span><div><strong>Ami</strong><span>Người phỏng vấn của bạn</span></div><span class="sound-bars"><i></i><i></i><i></i><i></i></span></div>
+    <div id="loading" role="status"><span class="spinner"></span><strong>Đang chuẩn bị Ami…</strong><span>Lần đầu cần tải hình nhân vật.</span><button id="retry" hidden>Thử tải lại</button></div>
+  </section>
+  <aside>
+    <div class="eyebrow">THỬ CHUYỂN ĐỘNG</div><h1>Một cuộc trò chuyện<br>tự nhiên hơn.</h1><p class="intro">Chọn một hành động để xem Ami phản ứng trong buổi phỏng vấn.</p>
+    <div class="current"><span>TRẠNG THÁI HIỆN TẠI</span><strong id="status" aria-live="polite">Đang tải nhân vật</strong><p id="description">Các nút sẽ sẵn sàng khi Ami tải xong.</p></div>
+    <div id="actions" class="actions" role="group" aria-label="Hành động phỏng vấn">
+      <button data-action="listen" disabled><span>◉</span><strong>Lắng nghe</strong><small>Chờ bạn trả lời</small></button>
+      <button data-action="think" disabled><span>◌</span><strong>Suy nghĩ</strong><small>Nhắm mắt, gật hai lần</small></button>
+      <button data-action="speak" disabled><span>≋</span><strong>Nói thử</strong><small>Mô phỏng khẩu hình</small></button>
+      <button data-action="wave" disabled><span>✋</span><strong>Chào bạn</strong><small>Vẫy tay mở đầu</small></button>
+      <button data-action="nod" disabled><span>↕</span><strong>Gật đầu</strong><small>Ghi nhận câu trả lời</small></button>
+      <button data-action="smile" disabled><span>☺</span><strong>Mỉm cười</strong><small>Thân thiện, khích lệ</small></button>
+      <button data-action="write" disabled><span>✎</span><strong>Ghi chép</strong><small>Xem lại ghi chú</small></button>
+      <button data-action="disagree" disabled><span>↔</span><strong>Không đồng tình</strong><small>Nhắm mắt, lắc đầu nhẹ</small></button>
+      <button data-action="clarify" disabled><span>?</span><strong>Chưa rõ</strong><small>Nghiêng đầu, muốn hỏi thêm</small></button>
+      <button data-action="reset" disabled><span>↺</span><strong>Trung tính</strong><small>Về tư thế ban đầu</small></button>
+    </div>
+    <details><summary>Khung bán thân</summary><div class="settings"><label>Độ phóng đại<input id="zoom" type="range" min="85" max="120" value="117" disabled></label></div></details>
+    <p class="footnote">“Nói thử” chỉ mô phỏng miệng, chưa phát giọng nói hay kết nối AI. Các hành động ngắn tự trở về trạng thái lắng nghe.</p>
+  </aside>
+</main>
+</body></html>
